@@ -15,6 +15,7 @@ def audio_normalize(y):
         normalized audio data the range is [-1, 1]
 
     """
+    print("y.dtype:", y.dtype)
 
     if y.dtype == "float32" or y.dtype == "float64":
         max_y = 1
@@ -31,7 +32,8 @@ def audio_normalize(y):
         max_y = np.abs(np.iinfo(np.int16).min)
 
     norm_y = y / max_y
-    norm_y = y.astype(np.float32)
+    norm_y = norm_y.astype(np.float32)
+
     return norm_y
 
 def wavread(wavefile, norm=True):
@@ -92,7 +94,7 @@ def wavwrite(wavefile, data, fs, ftype="float32"):
         y = y + 128 #convert signed to unsigned
     else:
         print("warning: this function can't support", ftype, ".", wavefile, "was written as float32")
-    
+
     sw.write(wavefile,fs,y)
 
 
